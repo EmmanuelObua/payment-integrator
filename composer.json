@@ -1,0 +1,49 @@
+{
+	"name": "emmanuel-obua/payment-integrator",
+	"description": "Integrate online payments from different service providors",
+	"type": "library",
+	"require": {
+		"php": "^7.2|^7.3|^8.0",
+		"ramsey/uuid": "4.x-dev",
+		"flutterwavedev/flutterwave-v3": "dev-master",
+		"guzzlehttp/guzzle": "^7.0"
+	},
+	"require-dev": {
+		"code-lts/doctum": "5.x-dev",
+		"friendsofphp/php-cs-fixer": "3.0.x-dev",
+		"mockery/mockery": "1.4.x-dev",
+		"phpunit/phpunit": "9.5.x-dev"
+	},
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "EmmanuelObua",
+			"email": "eobua6882@gmail.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"BlackJew\\Payments\\": "src/"
+		},
+		"files": [
+			"src/Support/helpers.php"
+		]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"BlackJew\\Payments\\Tests\\": "tests/"
+		}
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"scripts": {
+		"cs-fix": "php-cs-fixer fix",
+		"cs-lint": "php-cs-fixer fix --dry-run",
+		"doc": "doctum.php update doctum.php -v",
+		"test": "phpunit",
+		"test-coverage": "phpunit --coverage-html coverage"
+	},
+	"config": {
+		"sort-packages": true
+	}
+}
