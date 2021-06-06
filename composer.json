@@ -23,7 +23,6 @@
 		"psr-4": {
 			"BlackJew\\Payments\\": "src/"
 		},
-		"classmap": ["src/Application.php"],
 		"files": [
 			"src/Support/helpers.php"
 		]
