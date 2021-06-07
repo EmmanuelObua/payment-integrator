@@ -13,6 +13,11 @@ class FlutterWave extends RequestHandler implements Collections, Transfers
 	const COLLECTION_ENDPOINT 	= 'payments';
 	const TRANSCTION_ENDPOINT 	= 'transactions';
 
+	public function getProvider()
+	{
+		return $this->provider;
+	}
+
 	public function headers()
 	{
 
@@ -29,20 +34,22 @@ class FlutterWave extends RequestHandler implements Collections, Transfers
 
 	}
 
-	public function formatRequest( array $params = [] )
+	public function formatRequest( array $request = [] )
 	{
 
 		$headers = $this->headers();
 
 		return [
 			'headers' 	=> $headers,
-			'json' 		=> $params
+			'json' 		=> $request
 		]; 
 
 	}
 
 	public function sendRequest( $request_type, $url, $request = null)
 	{
+
+		$resp = (object)[];
 
 		try{
 
@@ -52,28 +59,23 @@ class FlutterWave extends RequestHandler implements Collections, Transfers
 
 			if($response->getStatusCode() != 200){
 
-				$resp 							= (object)[];
-
-				$resp->statusCode 				= $response->getStatusCode();
-				$resp->statusDescription 		= 'Operation failed';
-				$resp->body 					= $response->getBody()->getContents();
+				$resp->statusCode 			= $response->getStatusCode();
+				$resp->statusDescription 	= 'Operation failed';
+				$resp->body 				= $response->getBody()->getContents();
 
 				return $resp;
 
 			}
 
-			$resp 						= (object)[];
-
 			$resp->statusCode 			= 200;
 			$resp->statusDescription 	= 'Operation Successfull';
-			$resp->body 				= json_decode($response->body);
+			$resp->body 				= json_decode($response->getBody()->getContents());
 
 			return $resp;
 
 		} catch (\Exception $e){
 
 			/*Return operation Exception*/
-			$resp 						= (object)[];
 
 			$resp->statusCode 			= 100;
 			$resp->statusDescription 	= $e->getMessage();
@@ -85,6 +87,8 @@ class FlutterWave extends RequestHandler implements Collections, Transfers
 		}
 
 	}
+
+	/**/
 
 	public function verifyTransaction($transactionId)
 	{
@@ -99,20 +103,38 @@ class FlutterWave extends RequestHandler implements Collections, Transfers
 
 	}
 
+	/**
+	 * collect
+	 * Returns the checkout link.
+	 */
+
 	public function collect(array $request) 
 	{
 
 		$formatedRequest = $this->formatRequest($request);
 
-		$response = $this->sendRequest( 'POST', self::COLLECTION_ENDPOINT, $formatedRequest);
+		$response = $this->sendRequest( 'POST', self::COLLECTION_ENDPOINT, $formatedRequest );
 
-		if ($response->status === 'success') 
-			$return['link'] = $response->data->link;
-		$return['link'] = NULL;
+		if ($response->body->status == 'success') {
+
+			$return['link'] 	= $response->body->data->link;
+			$return['status'] 	= true;
+
+		} else {
+
+			$return['link'] 	= NULL;
+			$return['status'] 	= false;
+
+		}
 
 		return (object)$return;
 
 	}
+
+	/**
+	 * transfer
+	 * Returns ...
+	 */
 
 	public function transfer(array $request) 
 	{

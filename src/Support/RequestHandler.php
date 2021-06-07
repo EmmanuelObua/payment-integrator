@@ -12,20 +12,34 @@ abstract class RequestHandler
 	protected $client;
 
 	public function __construct($provider, $token)
-    {
-        $this->provider = $provider;
-        $this->token 	= $token;
-        $this->client 	= $provider === 'FLUTTERWAVE' ? 
-        				new Client([
-        					'verify' 	=> false, 
-        					'base_uri' 	=> 'https://api.flutterwave.com/v3/'
-        				]) : '';
-    }
+	{
+		$this->provider = $provider;
+		$this->token 	= $token;
+		$this->client 	= $this->getClient($provider);
+	}
 
-    abstract function headers();
+	private function getClient($provider)
+	{
 
-    abstract function formatRequest( array $params = [] );
+		if ($provider === 'FLUTTERWAVE') {
 
-    abstract function sendRequest( $request_type/*POST / GET*/, $url, $request = null);
+			return new Client([
+				'verify' 	=> false,
+				'base_uri' 	=> 'https://api.flutterwave.com/v3/'
+			]);
+
+		} else {
+			return '';
+		}
+
+	}
+
+	abstract function getProvider();
+
+	abstract function headers();
+
+	abstract function formatRequest( array $params = [] );
+
+	abstract function sendRequest( $request_type/*POST / GET*/, $url, $request = null);
 
 }
