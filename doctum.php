@@ -17,25 +17,20 @@ $iterator = Finder::create()
     ->in($dir);
 
 $versions = GitVersionCollection::create($dir)
-    ->add('1.3', 'v1.3')
-    ->add('1.4', 'v1.4')
-    ->add('1.5', 'v1.5')
-    ->add('1.6', 'v1.6')
-    ->add('1.7', 'v1.7')
-    ->add('1.8', 'v1.8')
-    ->add('2.0', 'v2.0')
-    ->add('3.x', 'v3.x')
-    ->add('master', 'Master');
+    ->add('1.0', 'v1.0')
+    ->add('1.1', 'v1.1')
+    ->add('1.1.1', 'v1.1.1')
+    ->add('main', 'Main');
 
 $repo = new GitHubRemoteRepository(
-    'mtvbrianking/laravel-mtn-momo',
+    'EmmanuelObua/payment-integrator',
     dirname($dir),
     'https://github.com/'
 );
 
 $options = [
     'theme' => 'default',
-    'title' => 'Laravel MTN MOMO API',
+    'title' => 'Payment Integrators For Top Providers',
     'versions' => $versions,
     'build_dir' => __DIR__.'/docs/%version%',
     'cache_dir' => __DIR__.'/docs/cache/%version%',
