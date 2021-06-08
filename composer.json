@@ -22,8 +22,7 @@
 	],
 	"autoload": {
 		"psr-4": {
-			"BlackJew\\Payments\\": "src/",
-			"classmap": ["src/Gateway.php"]
+			"BlackJew\\Payments\\": "src/"
 		},
 		"files": [
 			"src/Support/helpers.php"

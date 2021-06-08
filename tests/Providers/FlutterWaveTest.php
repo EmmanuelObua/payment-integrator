@@ -128,7 +128,7 @@ class FlutterWaveTest extends TestCase
 			"currency" 			=> "UGX",
 			"reference" 		=> "ugx-momo-transfer",
 			"beneficiary_name" 	=> "Emmanuel Obua"
-		]
+		];
 
 		$gateway = Gateway::create('FlutterWave');
 
