@@ -1,11 +1,26 @@
-# FLUTTER DOCUMENTATIONS
+# DOCUMENTATIONS
+
+# Available providers
+
+| Index | Provider |
+| ----------- | ----------- |
+|1|FlutterWave|
+
+---
+
+# Usage for FlutterWave provider
+
+> Collect payment
 
 ```php
 
-/**
- * Request params to pass to the collect method ... 
- * It would return an object with a link property
-*/
+use BlackJew\Payments\Gateway;
+
+$gateway = Gateway::create('FlutterWave');
+
+$gateway->loadClient()->setProvider()->setToken('passin secondary api key for flutterwave');
+
+/*Collect payments*/
 
 $request = [
 	"tx_ref" 			=> "hooli-tx-1920bbtytty",
@@ -29,11 +44,33 @@ $request = [
 	]
 ]
 
-public function collect(array $request);
+// This returns a checkout link to complete payments
+
+$response = $gateway->collect($request);
+
+print_r($response);
+
+if ($response->status == true) {
+	header('location:'.$response->link);
+} else {
+	return;
+}
+
+/*After this verify transaction ...*/
 
 ```
 
-```php   
+> Transfer payment
+
+```php
+
+use BlackJew\Payments\Gateway;
+
+$gateway = Gateway::create('FlutterWave');
+
+$gateway->loadClient()->setProvider()->setToken('passin secondary api key for flutterwave');
+
+/*Collect payments*/
 
 $request = [
 	"account_bank" 		=> "MPS",
@@ -45,7 +82,15 @@ $request = [
 	"beneficiary_name" 	=> "Emmanuel Obua"
 ]
 
-/*Response would be*/
+// This returns a checkout link to complete payments
+
+$response = $gateway->transfer($request);
+
+print_r($response);
+
+/**
+ * Response will look like below
+ */
 
 {
 	"status": "success",
@@ -70,15 +115,30 @@ $request = [
 	}
 }
 
-public function transfer(array $request);
+/*After this, verify transaction ...*/
 
 ```
+
+> Transaction verification
 
 ```php
 
 /**
- * pass in a transactionID
- * Get the response below.
+ * After payment processing on the flutterwave UI, 
+ * a callback is sent back to the callback uri preset in flutterwave dashboard.
+ * 1. Get the tx_ref from the callback response object.
+ * 2. Verify the transaction from the callback before updating your backend
+ * 3. Update the affected tables with the confirmed transaction.
+*/
+
+$transactionId = $callback_response->tx_ref;
+
+$response = $gateway->verifyTransaction($transactionId);
+
+print_r($response);
+
+/**
+ * Transaction verification response will look like below
  */
 
 {
@@ -103,15 +163,6 @@ public function transfer(array $request);
 		"created_at": "2020-03-11T19:22:07.000Z",
 		"account_id": 73362,
 		"amount_settled": 2000,
-		"card": {
-			"first_6digits": "553188",
-			"last_4digits": "2950",
-			"issuer": " CREDIT",
-			"country": "NIGERIA NG",
-			"type": "MASTERCARD",
-			"token": "flw-t1nf-f9b3bf384cd30d6fca42b6df9d27bd2f-m03k",
-			"expiry": "09/22"
-		},
 		"customer": {
 			"id": 252759,
 			"name": "Kendrick Graham",
@@ -121,8 +172,6 @@ public function transfer(array $request);
 		}
 	}
 }
-
-public function verifyTransaction($transactionId);
 
 ```
 
