@@ -4,9 +4,10 @@ namespace BlackJew\Payments\Providers;
 
 use BlackJew\Payments\Interfaces\Collections;
 use BlackJew\Payments\Interfaces\Transfers;
-use BlackJew\Payments\Support\RequestHandler;
 
-class FlutterWave extends RequestHandler implements Collections, Transfers 
+use GuzzleHttp\Client;
+
+class FlutterWave extends BaseProvider implements Collections, Transfers 
 {
 
 	const TRANSFER_ENDPOINT 	= 'transfers';
@@ -16,6 +17,33 @@ class FlutterWave extends RequestHandler implements Collections, Transfers
 	public function getProvider()
 	{
 		return $this->provider;
+	}
+
+	public function loadClient($base_url = 'https://api.flutterwave.com/v3/')
+	{
+
+		$this->client = new Client([ 'verify' => false, 'base_uri' => $base_url ]);
+
+		return $this;
+
+	}
+
+	public function setToken($token)
+	{
+
+		$this->token = $token;
+
+		return $this;
+
+	}
+
+	public function setProvider($provider = 'FLUTTERWAVE')
+	{
+
+		$this->provider = $provider;
+
+		return $this;
+
 	}
 
 	public function headers()

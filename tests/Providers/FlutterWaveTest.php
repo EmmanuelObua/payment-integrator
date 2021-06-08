@@ -2,8 +2,11 @@
 
 namespace BlackJew\Payments\Tests\Providers;
 
-use BlackJew\Payments\Providers\FlutterWave;
-use BlackJew\Payments\Support\RequestHandler;
+require_once __DIR__.'/../../vendor/autoload.php';
+
+use BlackJew\Payments\Providers\BaseProvider;
+use BlackJew\Payments\Gateway;
+
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 
@@ -13,9 +16,11 @@ class FlutterWaveTest extends TestCase
 	public function testItGetsFlutterWaveProviderIfTheClassIsInstantiated()
 	{
 
-		$getway = new FlutterWave('FLUTTERWAVE', 'FLWSECK-31c9a21e012ec72061328ae9be5a2ea4-X');
+		$gateway = Gateway::create('FlutterWave');
 
-		$provider = $getway->getProvider('FLUTTERWAVE');
+		$gateway->loadClient()->setProvider()->setToken(env('FLUTTERWAVE_SECRET_KEY'));
+
+		$provider = $gateway->getProvider('FLUTTERWAVE');
 
 		Assert::assertEquals('FLUTTERWAVE', $provider);
 
@@ -24,9 +29,11 @@ class FlutterWaveTest extends TestCase
 	public function testHeadersReturnsAnArray()
 	{
 
-		$getway = new FlutterWave('FLUTTERWAVE', 'FLWSECK-31c9a21e012ec72061328ae9be5a2ea4-X');
+		$gateway = Gateway::create('FlutterWave');
 
-		$headers = $getway->headers();
+		$gateway->loadClient()->setProvider()->setToken(env('FLUTTERWAVE_SECRET_KEY'));
+
+		$headers = $gateway->headers();
 
 		Assert::assertIsArray($headers);
 
@@ -35,9 +42,11 @@ class FlutterWaveTest extends TestCase
 	public function testHeadersReturnsTheCorrectFormat()
 	{
 
-		$getway = new FlutterWave('FLUTTERWAVE', 'FLWSECK-31c9a21e012ec72061328ae9be5a2ea4-X');
+		$gateway = Gateway::create('FlutterWave');
 
-		$headers = $getway->headers();
+		$gateway->loadClient()->setProvider()->setToken(env('FLUTTERWAVE_SECRET_KEY'));
+
+		$headers = $gateway->headers();
 
 		Assert::assertArrayHasKey('Content-Type', $headers);
 		Assert::assertArrayHasKey('Accept', $headers);
@@ -48,9 +57,11 @@ class FlutterWaveTest extends TestCase
 	public function testFormatRequestReturnsAnArray()
 	{
 
-		$getway = new FlutterWave('FLUTTERWAVE', 'FLWSECK-31c9a21e012ec72061328ae9be5a2ea4-X');
+		$gateway = Gateway::create('FlutterWave');
 
-		$request = $getway->formatRequest();
+		$gateway->loadClient()->setProvider()->setToken(env('FLUTTERWAVE_SECRET_KEY'));
+
+		$request = $gateway->formatRequest();
 
 		Assert::assertIsArray($request);
 
@@ -59,9 +70,11 @@ class FlutterWaveTest extends TestCase
 	public function testFormatRequestReturnsTheCorrectFormat()
 	{
 
-		$getway = new FlutterWave('FLUTTERWAVE', 'FLWSECK-31c9a21e012ec72061328ae9be5a2ea4-X');
+		$gateway = Gateway::create('FlutterWave');
 
-		$request = $getway->formatRequest();
+		$gateway->loadClient()->setProvider()->setToken(env('FLUTTERWAVE_SECRET_KEY'));
+
+		$request = $gateway->formatRequest();
 
 		Assert::assertArrayHasKey('headers', $request);
 		Assert::assertArrayHasKey('json', $request);
@@ -87,20 +100,19 @@ class FlutterWaveTest extends TestCase
 				"name" 			=> "Yemi Desola"
 			],
 			"customizations" => [
-				"title" 			=> "Your company's Payments",
+				"title" 		=> "Your company's Payments",
 				"description" 	=> "Middleout isn't free. Pay the price",
 				"logo" 			=> "https://assets.piedpiper.com/logo.png"
 			]
 		];
 
-		$getway = new FlutterWave('FLUTTERWAVE', 'FLWSECK-31c9a21e012ec72061328ae9be5a2ea4-X');
+		$gateway = Gateway::create('FlutterWave');
 
-		$response = $getway->collect($request);
+		$gateway->loadClient()->setProvider()->setToken(env('FLUTTERWAVE_SECRET_KEY'));
+
+		$response = $gateway->collect($request);
 
 		$object = (object)['link' => NULL];
-
-		// var_dump($object);
-		// ob_flush();
 
 		Assert::assertObjectHasAttribute('link', $response);
 
@@ -109,9 +121,11 @@ class FlutterWaveTest extends TestCase
 	public function testItReturnsFlutterWave()
 	{
 
-		$getway = new FlutterWave('FLUTTERWAVE', 'FLWSECK-31c9a21e012ec72061328ae9be5a2ea4-X');
+		$gateway = Gateway::create('FlutterWave');
 
-		Assert::assertInstanceOf(RequestHandler::class, $getway);
+		$gateway->loadClient()->setProvider()->setToken(env('FLUTTERWAVE_SECRET_KEY'));
+
+		Assert::assertInstanceOf(BaseProvider::class, $gateway);
 
 	}
 	

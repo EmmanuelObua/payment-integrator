@@ -17,14 +17,11 @@
 		</include>
 	</coverage>
 	<testsuites>
-		<testsuite name="MTN MOMO Test Suite">
+		<testsuite name="PAYMENT INTEGRATOR">
 			<directory>tests</directory>
 		</testsuite>
 	</testsuites>
 	<php>
-		<env name="APP_ENV" value="testing"/>
-		<env name="APP_KEY" value="base64:0w8L41TeMgO/N6P3SOlZFn7QIQfsnS6cm6Gdm5nCCVI="/>
-		<env name="DB_CONNECTION" value="sqlite"/>
-		<env name="DB_DATABASE" value=":memory:"/>
+		<env name="FLUTTERWAVE_SECRET_KEY" value="FLWSECK-31c9a21e012ec72061328ae9be5a2ea4-X"/>
 	</php>
 </phpunit>
