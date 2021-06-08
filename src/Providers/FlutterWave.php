@@ -123,11 +123,13 @@ class FlutterWave extends BaseProvider implements Collections, Transfers
 
 		$request = $this->formatRequest();
 
-		return $this->sendRequest(
+		$response = $this->sendRequest(
 			'GET', 
 			self::TRANSCTION_ENDPOINT.'/'.$transactionId.'/verify', 
 			$request
 		);
+
+		return $return->body;
 
 	}
 
@@ -161,7 +163,7 @@ class FlutterWave extends BaseProvider implements Collections, Transfers
 
 	/**
 	 * transfer
-	 * Returns ...
+	 * Returns a response object ...
 	 */
 
 	public function transfer(array $request) 
@@ -170,6 +172,8 @@ class FlutterWave extends BaseProvider implements Collections, Transfers
 		$formatedRequest = $this->formatRequest($request);
 
 		$response = $this->sendRequest( 'POST', self::TRANSFER_ENDPOINT, $formatedRequest);
+
+		return $response->body;
 
 	}
 

@@ -112,9 +112,32 @@ class FlutterWaveTest extends TestCase
 
 		$response = $gateway->collect($request);
 
-		$object = (object)['link' => NULL];
-
 		Assert::assertObjectHasAttribute('link', $response);
+		Assert::assertObjectHasAttribute('status', $response);
+
+	}
+
+	public function testCheckIfTransferMethodIsCalledAndItReturnsAResponse()
+	{
+
+		$request = [
+			"account_bank" 		=> "MPS",
+			"account_number" 	=> "256777156882",
+			"amount" 			=> 5500,
+			"narration" 		=> "UG MOMO",
+			"currency" 			=> "UGX",
+			"reference" 		=> "ugx-momo-transfer",
+			"beneficiary_name" 	=> "Emmanuel Obua"
+		]
+
+		$gateway = Gateway::create('FlutterWave');
+
+		$gateway->loadClient()->setProvider()->setToken(env('FLUTTERWAVE_SECRET_KEY'));
+
+		$response = $gateway->transfer($request);
+
+		Assert::assertObjectHasAttribute('status', $response);
+		Assert::assertObjectHasAttribute('data', $response);
 
 	}
 
