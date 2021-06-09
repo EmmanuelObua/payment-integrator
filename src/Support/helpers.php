@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__.'/../../vendor/autoload.php';
-
 use BlackJew\Payments\Interfaces\Collections;
 use BlackJew\Payments\Interfaces\Transfers;
 
