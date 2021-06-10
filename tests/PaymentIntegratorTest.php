@@ -14,13 +14,5 @@ class PaymentIntegratorTest extends TestCase
 
 		
 	}
-
-	// public function testItReturnsFlutterWave()
-	// {
-	// 	$numberToWords = new NumberToWords();
-	// 	$numberToWordsTransformer = $numberToWords->getNumberTransformer('en');
-
-	// 	Assert::assertInstanceOf(NumberTransformer::class, $numberToWordsTransformer);
-	// }
 	
 }

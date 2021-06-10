@@ -42,7 +42,7 @@ $request = [
 		"description" 	=> "Middleout isn't free. Pay the price",
 		"logo" 			=> "https://assets.piedpiper.com/logo.png"
 	]
-]
+];
 
 // This returns a checkout link to complete payments
 
@@ -70,7 +70,7 @@ $gateway = Gateway::create('FlutterWave');
 
 $gateway->loadClient()->setProvider()->setToken('passin secondary api key for flutterwave');
 
-/*Collect payments*/
+/*Transfer payments*/
 
 $request = [
 	"account_bank" 		=> "MPS",
@@ -80,7 +80,7 @@ $request = [
 	"currency" 			=> "UGX",
 	"reference" 		=> "ugx-momo-transfer",
 	"beneficiary_name" 	=> "Emmanuel Obua"
-]
+];
 
 // This returns a checkout link to complete payments
 

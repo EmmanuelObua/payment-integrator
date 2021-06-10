@@ -9,9 +9,7 @@ abstract class BaseProvider
 	protected $provider;
 	protected $client;
 
-	public function __construct()
-	{
-	}
+	public function __construct(){}
 
 	abstract function loadClient($base_url = '');
 

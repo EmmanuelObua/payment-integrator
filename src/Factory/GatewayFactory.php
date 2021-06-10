@@ -50,7 +50,7 @@ class GatewayFactory
     * Create a new gateway instance
     *
     * @param string             $class Gateway name
-    * @param token|null     	$token A Symfony HTTP Request implementation
+    * @param token|null     	$token Bearer token
     * @throws RuntimeException  If no such gateway is found
     * @return GatewayInterface  An object of class $class is created and returned
     */
