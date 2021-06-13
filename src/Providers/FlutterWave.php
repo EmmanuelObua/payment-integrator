@@ -129,7 +129,7 @@ class FlutterWave extends BaseProvider implements Collections, Transfers
 			$request
 		);
 
-		return $return->body;
+		return $response->body;
 
 	}
 
