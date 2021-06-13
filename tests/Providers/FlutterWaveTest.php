@@ -123,7 +123,7 @@ class FlutterWaveTest extends TestCase
 		$request = [
 			"account_bank" 		=> "MPS",
 			"account_number" 	=> "256777156882",
-			"amount" 			=> 5500,
+			"amount" 			=> 5000,
 			"narration" 		=> "UG MOMO",
 			"currency" 			=> "UGX",
 			"reference" 		=> "ugx-momo-transfer",
@@ -136,8 +136,30 @@ class FlutterWaveTest extends TestCase
 
 		$response = $gateway->transfer($request);
 
-		Assert::assertObjectHasAttribute('status', $response);
-		Assert::assertObjectHasAttribute('data', $response);
+		if (is_string($response)) {
+			Assert::isFalse();
+		} else {
+			Assert::assertObjectHasAttribute('status', $response);
+			Assert::assertObjectHasAttribute('data', $response);
+		}
+
+	}
+
+	public function testCheckIfTransactionVerificationReturnsAResponse()
+	{
+
+		$gateway = Gateway::create('FlutterWave');
+
+		$gateway->loadClient()->setProvider()->setToken(env('FLUTTERWAVE_SECRET_KEY'));
+
+		$response = $gateway->verifyTransaction('2284543');
+
+		if (is_string($response)) {
+			Assert::isFalse();
+		} else {
+			Assert::assertObjectHasAttribute('status', $response);
+			Assert::assertObjectHasAttribute('data', $response);
+		}
 
 	}
 

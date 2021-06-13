@@ -22,6 +22,6 @@
 		</testsuite>
 	</testsuites>
 	<php>
-		<env name="FLUTTERWAVE_SECRET_KEY" value="FLWSECK-31c9a21e012ec72061328ae9be5a2ea4-X"/>
+		<env name="FLUTTERWAVE_SECRET_KEY" value="FLWSECK_TEST-22c64684a705f5a862eb291eb23706ad-X"/>
 	</php>
 </phpunit>
